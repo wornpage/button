@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 
-const buttonSource = readFileSync(new URL('../src/WornButton.svelte', import.meta.url), 'utf8');
+const buttonSource = readFileSync(new URL('../src/WornButton.svelte', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
 
 describe('disabled state', () => {
 	test('is owned by the package for buttons and links', () => {
