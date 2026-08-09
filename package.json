@@ -1,6 +1,6 @@
 {
   "name": "@wornpage/button",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Svelte 5 button — primary, danger, warning variants, link mode, keyboard-friendly",
   "type": "module",
   "main": "./dist/worn-button.js",
@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "test": "echo 'No tests yet'",
+    "test": "bun test",
     "build": "vite build"
   },
   "peerDependencies": {

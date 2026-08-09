@@ -85,7 +85,7 @@
 		color: var(--cockpit-accent-text);
 		transform: rotate(-0.3deg);
 	}
-	.worn-btn.is-primary:active:not(:disabled) {
+	.worn-btn.is-primary:active:not(:disabled):not([aria-disabled='true']) {
 		transform: rotate(0deg) translateY(1px);
 	}
 	.worn-btn.is-danger {
@@ -98,18 +98,14 @@
 		border-color: var(--cockpit-warning-text);
 		color: var(--cockpit-warning-text);
 	}
-	.worn-btn.is-warning:hover:not(:disabled) {
+	.worn-btn.is-warning:hover:not(:disabled):not([aria-disabled='true']) {
 		background: var(--cockpit-warning-bg);
 	}
-	.worn-btn:hover:not(:disabled) {
+	.worn-btn:hover:not(:disabled):not([aria-disabled='true']) {
 		filter: brightness(0.96);
 	}
-	.worn-btn:active:not(:disabled) {
+	.worn-btn:active:not(:disabled):not([aria-disabled='true']) {
 		transform: translateY(1px);
-	}
-	.worn-btn:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
 	}
 	.worn-btn:focus-visible {
 		outline: 2px dashed var(--cockpit-accent);
@@ -120,5 +116,18 @@
 		border-color: var(--cockpit-accent);
 		color: var(--cockpit-accent-text);
 		animation: energy-pulse 0.2s ease-out;
+	}
+	.worn-btn.worn-btn:disabled,
+	.worn-btn.worn-btn[aria-disabled='true'] {
+		background: var(--cockpit-bg-secondary);
+		border-color: var(--cockpit-border);
+		color: var(--cockpit-text-muted);
+		cursor: not-allowed;
+		filter: none;
+		opacity: 1;
+		transform: none;
+		translate: 0 0;
+		box-shadow: none;
+		animation: none;
 	}
 </style>
