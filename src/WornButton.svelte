@@ -65,18 +65,20 @@
 		font-size: 13px;
 		font-weight: 610;
 		line-height: 1.2;
+		min-height: 36px;
 		padding: 8px 16px;
 		border: 1px solid var(--cockpit-border);
 		border-radius: var(--cockpit-radius);
 		background: var(--cockpit-surface);
 		color: var(--cockpit-text);
 		cursor: pointer;
+		touch-action: manipulation;
 		transition: transform 0.08s ease, box-shadow 0.12s ease, background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease;
 		user-select: none;
 	}
 	.worn-btn.is-sm {
 		font-size: 12px;
-		min-height: 44px;
+		min-height: 32px;
 		padding: 4px 10px;
 	}
 	.worn-btn.is-primary {
@@ -110,6 +112,18 @@
 	.worn-btn:focus-visible {
 		outline: 2px dashed var(--cockpit-accent);
 		outline-offset: 2px;
+	}
+	@media (pointer: coarse) {
+		.worn-btn,
+		.worn-btn.is-sm {
+			min-width: 44px;
+			min-height: 44px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.worn-btn {
+			transition: none;
+		}
 	}
 	.worn-btn:global(.is-active) {
 		background: var(--cockpit-accent);

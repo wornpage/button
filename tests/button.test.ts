@@ -22,6 +22,21 @@ describe('disabled state', () => {
 	});
 });
 
+describe('compact and touch interactions', () => {
+	test('keeps compact desktop controls while reserving 44px targets for touch input', () => {
+		expect(buttonSource).toContain('min-height: 36px;');
+		expect(buttonSource).toContain("@media (pointer: coarse) {");
+		expect(buttonSource).toContain('min-width: 44px;');
+		expect(buttonSource).toContain('min-height: 44px;');
+	});
+
+	test('suppresses browser gesture delay and decorative transitions when appropriate', () => {
+		expect(buttonSource).toContain('touch-action: manipulation;');
+		expect(buttonSource).toContain('@media (prefers-reduced-motion: reduce) {');
+		expect(buttonSource).toContain('transition: none;');
+	});
+});
+
 describe('browser wrapper', () => {
 	test('delegates its public attributes to the canonical Svelte button', () => {
 		expect(elementSource).toContain("tag: 'worn-button'");

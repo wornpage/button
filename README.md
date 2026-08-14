@@ -44,7 +44,7 @@ The generated browser bundle registers `<worn-button>`. Its `label`, `variant`, 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `variant` | `'default' \| 'primary' \| 'danger' \| 'warning'` | `'default'` | Visual style |
-| `size` | `'sm' \| 'md'` | `'md'` | Button size |
+| `size` | `'sm' \| 'md'` | `'md'` | Button size; both sizes keep a 44px target for coarse pointers |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `href` | `string` | — | Renders as `<a>` link |
 | `onclick` | `(e) => void` | — | Click handler |
