@@ -3,6 +3,26 @@ import { readFileSync } from 'node:fs';
 
 const buttonSource = readFileSync(new URL('../src/WornButton.svelte', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
 const elementSource = readFileSync(new URL('../src/ButtonElement.svelte', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
+const indexSource = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
+const typesSource = readFileSync(new URL('../src/types.ts', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
+
+describe('public contract', () => {
+	test('merges consumer classes for button and link modes', () => {
+		expect(typesSource).toContain('class?: string;');
+		expect(buttonSource).toContain('class: className,');
+		expect(buttonSource.match(/class=\{className \? `worn-btn \$\{className\}` : 'worn-btn'\}/gu)).toHaveLength(2);
+		expect(indexSource).toContain("export type { ButtonProps } from './types';");
+	});
+
+	test('owns link presentation and long-label containment', () => {
+		expect(buttonSource).toContain('box-sizing: border-box;');
+		expect(buttonSource).toContain('max-inline-size: 100%;');
+		expect(buttonSource).toContain('min-inline-size: 0;');
+		expect(buttonSource).toContain('overflow-wrap: anywhere;');
+		expect(buttonSource).toContain('text-decoration: none;');
+		expect(buttonSource).toContain('white-space: normal;');
+	});
+});
 
 describe('disabled state', () => {
 	test('is owned by the package for buttons and links', () => {
