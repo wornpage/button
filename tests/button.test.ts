@@ -171,6 +171,13 @@ describe('compact and touch interactions', () => {
 		expect(iconButtonSource).toContain('opacity: 1;');
 	});
 
+	test('limits icon hover feedback to fine hover-capable pointers', () => {
+		const hoverMedia = iconButtonSource.match(/@media \(hover: hover\) and \(pointer: fine\) \{([\s\S]*?)\n\t\}/u)?.[1] ?? '';
+		expect(hoverMedia).toContain('.worn-icon-btn:hover:not(:disabled) {');
+		expect(hoverMedia).toContain('.worn-icon-btn.is-danger:hover:not(:disabled) {');
+		expect(iconButtonSource).not.toContain('\n\t.worn-icon-btn:hover:not(:disabled) {');
+	});
+
 	test('keeps reactions touch-safe, legible, and theme-aware', () => {
 		expect(reactionButtonSource).toContain('min-block-size: 44px;');
 		expect(reactionButtonSource).toContain('min-inline-size: 44px;');
