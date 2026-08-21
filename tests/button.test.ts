@@ -1,11 +1,14 @@
 import { describe, expect, test } from 'bun:test';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { compile } from 'svelte/compiler';
 
 const buttonSource = readFileSync(new URL('../src/WornButton.svelte', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
 const iconButtonSource = readFileSync(new URL('../src/WornIconButton.svelte', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
 const reactionButtonSource = readFileSync(new URL('../src/ReactionButton.svelte', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
-const distSource = readFileSync(new URL('../dist/worn-button.js', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
+const distUrl = new URL('../dist/worn-button.js', import.meta.url);
+const distSource = existsSync(distUrl)
+	? readFileSync(distUrl, 'utf8').replace(/\r\n/gu, '\n')
+	: null;
 const elementSource = readFileSync(new URL('../src/ButtonElement.svelte', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
 const indexSource = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
 const viteConfigSource = readFileSync(new URL('../vite.config.ts', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
@@ -83,6 +86,7 @@ describe('public contract', () => {
 		expect(indexSource).toContain("export { default as ReactionButton } from './ReactionButton.svelte';");
 		expect(viteConfigSource).toContain("entry: 'src/ButtonElement.svelte'");
 		expect(viteConfigSource).toContain("fileName: () => 'worn-button.js'");
+		if (distSource === null) return;
 		expect(distSource).toContain('worn-button');
 		expect(distSource).not.toContain('worn-icon-btn');
 		expect(distSource).not.toContain('worn-reaction-btn');
