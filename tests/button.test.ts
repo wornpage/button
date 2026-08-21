@@ -190,6 +190,12 @@ describe('compact and touch interactions', () => {
 		expect(reactionButtonSource).toContain('@media (forced-colors: active)');
 		expect(reactionButtonSource).toContain('opacity: 1;');
 	});
+
+	test('limits reaction hover feedback to fine hover-capable pointers', () => {
+		const hoverMedia = reactionButtonSource.match(/@media \(hover: hover\) and \(pointer: fine\) \{([\s\S]*?)\n\t\}/u)?.[1] ?? '';
+		expect(hoverMedia).toContain('.worn-reaction-btn:hover:not(:disabled) {');
+		expect(reactionButtonSource).not.toContain('\n\t.worn-reaction-btn:hover:not(:disabled) {');
+	});
 });
 
 describe('browser wrapper', () => {
