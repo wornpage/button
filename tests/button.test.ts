@@ -64,6 +64,7 @@ describe('public contract', () => {
 		expect(buttonSource).toContain('if (disabled) { e.preventDefault(); return; }');
 		expect(buttonSource).toContain('tabindex={disabled ? -1 : undefined}');
 		expect(buttonSource).toContain('{disabled}');
+		expect(buttonSource).toContain('@media (hover: hover) and (pointer: fine) {');
 		expect(buttonSource).toContain('.worn-btn.is-primary:hover:not(:disabled):not([aria-disabled=\'true\']) {');
 		expect(buttonSource).toContain('box-shadow: 0 2px 4px rgb(0 0 0 / 0.14);');
 		expect(buttonSource).toContain('.worn-btn.is-primary:active:not(:disabled):not([aria-disabled=\'true\']) {');
@@ -117,6 +118,12 @@ describe('disabled state', () => {
 		expect(buttonSource).not.toContain('.worn-btn:active:not(:disabled) {');
 		expect(buttonSource.indexOf("[aria-pressed='true']:not(:disabled):not([aria-disabled='true'])"))
 		.toBeLessThan(buttonSource.indexOf(".worn-btn.worn-btn[aria-disabled='true'] {"));
+	});
+
+	test('limits hover feedback to fine hover-capable pointers', () => {
+		const hoverMedia = buttonSource.match(/@media \(hover: hover\) and \(pointer: fine\) \{([\s\S]*?)\n\t\}/u)?.[1] ?? '';
+		expect(hoverMedia).toContain('.worn-btn:hover:not(:disabled):not([aria-disabled=\'true\']) {');
+		expect(hoverMedia).toContain('.worn-btn.is-warning:hover:not(:disabled):not([aria-disabled=\'true\']) {');
 	});
 });
 
