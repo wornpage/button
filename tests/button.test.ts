@@ -103,8 +103,8 @@ describe('public contract', () => {
 describe('disabled state', () => {
 	test('is owned by the package for buttons and links', () => {
 		expect(buttonSource).toContain(".worn-btn.worn-btn:disabled,\n\t.worn-btn.worn-btn[aria-disabled='true'] {");
-		expect(buttonSource).toContain('background: var(--cockpit-bg-secondary);');
-		expect(buttonSource).toContain('color: var(--cockpit-text-muted);');
+		expect(buttonSource).toContain('background: var(--worn-bg-secondary);');
+		expect(buttonSource).toContain('color: var(--worn-text-muted);');
 		expect(buttonSource).toContain('cursor: not-allowed;');
 		expect(buttonSource).toContain('opacity: 1;');
 		expect(buttonSource).toContain('animation: none;');
@@ -140,7 +140,7 @@ describe('compact and touch interactions', () => {
 
 	test('suppresses browser gesture delay and decorative transitions when appropriate', () => {
 		expect(buttonSource).toContain('touch-action: manipulation;');
-		expect(buttonSource).toContain('outline: 2px dashed var(--worn-button-focus, var(--cockpit-focus, var(--cockpit-text, #21322b)));');
+		expect(buttonSource).toContain('outline: 2px dashed var(--worn-button-focus, var(--worn-focus, var(--worn-text, #21322b)));');
 		expect(buttonSource).toContain('@media (prefers-reduced-motion: reduce) {');
 		expect(buttonSource).toContain('transition: none;');
 	});
@@ -162,11 +162,11 @@ describe('compact and touch interactions', () => {
 	});
 
 	test('owns icon-button theme and focus states', () => {
-		expect(iconButtonSource).toContain('color: var(--cockpit-text);');
-		expect(iconButtonSource).toContain('background: var(--cockpit-bg-secondary);');
-		expect(iconButtonSource).toContain('color: var(--cockpit-danger-text);');
+		expect(iconButtonSource).toContain('color: var(--worn-text);');
+		expect(iconButtonSource).toContain('background: var(--worn-bg-secondary);');
+		expect(iconButtonSource).toContain('color: var(--worn-danger-text);');
 		expect(iconButtonSource).toContain('.worn-icon-btn:focus-visible {');
-		expect(iconButtonSource).toContain('outline: 2px dashed var(--worn-button-focus, var(--cockpit-focus, var(--cockpit-text, #21322b)));');
+		expect(iconButtonSource).toContain('outline: 2px dashed var(--worn-button-focus, var(--worn-focus, var(--worn-text, #21322b)));');
 		expect(iconButtonSource).toContain('.worn-icon-btn:disabled {');
 		expect(iconButtonSource).toContain('opacity: 1;');
 	});
@@ -184,7 +184,7 @@ describe('compact and touch interactions', () => {
 		expect(reactionButtonSource).toContain('touch-action: manipulation;');
 		expect(reactionButtonSource).toContain('overflow-wrap: anywhere;');
 		expect(reactionButtonSource).toContain('.worn-reaction-btn:focus-visible {');
-		expect(reactionButtonSource).toContain('var(--cockpit-focus, var(--cockpit-text, #21322b))');
+		expect(reactionButtonSource).toContain('var(--worn-focus, var(--worn-text, #21322b))');
 		expect(reactionButtonSource).toContain('.worn-reaction-btn.is-pressed {');
 		expect(reactionButtonSource).toContain('@media (prefers-reduced-motion: reduce)');
 		expect(reactionButtonSource).toContain('@media (forced-colors: active)');

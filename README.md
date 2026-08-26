@@ -77,11 +77,11 @@ target.
 ## CSS API
 
 The component uses CSS custom properties from the parent theme:
-- `--cockpit-text`, `--cockpit-surface`, `--cockpit-border`, `--cockpit-radius`
-- `--cockpit-accent`, `--cockpit-accent-text`
-- `--cockpit-danger-bg`, `--cockpit-danger-border`, `--cockpit-danger-text`
-- `--cockpit-warning-text`, `--cockpit-warning-bg`
+- `--worn-text`, `--worn-surface`, `--worn-border`, `--worn-radius`
+- `--worn-accent`, `--worn-accent-text`
+- `--worn-danger-bg`, `--worn-danger-border`, `--worn-danger-text`
+- `--worn-warning-text`, `--worn-warning-bg`
 - `--font-typewriter`
-- `--worn-button-focus` (optional focus-ring override; defaults to `--cockpit-focus`, then `--cockpit-text`)
+- `--worn-button-focus` (optional focus-ring override; defaults to `--worn-focus`, then `--worn-text`)
 
 Additional classes, including `is-active`, are merged with the component class. Link buttons keep button presentation without inherited underlines, and long labels wrap within their container.
