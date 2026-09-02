@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import { existsSync, readFileSync } from 'node:fs';
 import { compile } from 'svelte/compiler';
+import { assertSafeHref } from '../src/safe-href';
 
 const buttonSource = readFileSync(new URL('../src/WornButton.svelte', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
 const iconButtonSource = readFileSync(new URL('../src/WornIconButton.svelte', import.meta.url), 'utf8').replace(/\r\n/gu, '\n');
@@ -60,7 +61,7 @@ describe('public contract', () => {
 	test('uses restrained non-geometric primary hover and pressed states', () => {
 		expect(buttonSource).not.toContain('rotate(');
 		expect(buttonSource).not.toContain('transition: transform');
-		expect(buttonSource).toContain('{href}');
+		expect(buttonSource).toContain('href={safeHref}');
 		expect(buttonSource).toContain('if (disabled) { e.preventDefault(); return; }');
 		expect(buttonSource).toContain('tabindex={disabled ? -1 : undefined}');
 		expect(buttonSource).toContain('{disabled}');
@@ -202,6 +203,33 @@ describe('browser wrapper', () => {
 	test('delegates its public attributes to the canonical Svelte button', () => {
 		expect(elementSource).toContain("tag: 'worn-button'");
 		expect(elementSource).toContain("disabled: { type: 'Boolean' }");
-		expect(elementSource).toContain('<Button {variant} {disabled} {size} {type} {href}>{label}</Button>');
+		expect(elementSource).toContain('href?: string | null;');
+		expect(elementSource).toContain('<Button {variant} {disabled} {size} {type} href={href ?? undefined}>{label}</Button>');
+	});
+});
+
+describe('link safety', () => {
+	test('accepts local destinations and explicitly supported schemes', () => {
+		for (const href of [
+			'/projects', './settings', '../home', 'projects/42', '?filter=open', '#details',
+			'https://example.com/path',
+			'mailto:security@example.com', 'tel:+15551234567'
+		]) {
+			expect(assertSafeHref(href)).toBe(href);
+		}
+		expect(buttonSource).toContain("import { assertSafeHref } from './safe-href';");
+		expect(buttonSource).toContain('href === undefined ? undefined : assertSafeHref(href)');
+	});
+
+	test('rejects executable, ambiguous, and control-obfuscated destinations', () => {
+		for (const href of [
+			'', ' javascript:alert(1)', 'javascript:alert(1)', 'JAVASCRIPT:alert(1)',
+			'java\nscript:alert(1)', 'data:text/html,boom', 'vbscript:msgbox(1)',
+			'http://localhost:3000', 'ftp://example.com/file', '//example.com/path',
+			'\\\\example.com\\path', 'https://example.com/a b',
+			'java\u200bscript:alert(1)', 'https://example.com/\u0000path'
+		]) {
+			expect(() => assertSafeHref(href)).toThrow(TypeError);
+		}
 	});
 });
