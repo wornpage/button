@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ButtonProps } from './types';
+	import { assertSafeHref } from './safe-href';
 
 	let {
 		variant = 'default',
@@ -12,11 +13,13 @@
 		children,
 		...rest
 	}: ButtonProps = $props();
+
+	const safeHref = $derived(href === undefined ? undefined : assertSafeHref(href));
 </script>
 
-{#if href}
+{#if safeHref}
 	<a
-		{href}
+		href={safeHref}
 		{...rest}
 		class={className ? `worn-btn ${className}` : 'worn-btn'}
 		class:is-primary={variant === 'primary'}
