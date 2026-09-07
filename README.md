@@ -1,5 +1,8 @@
 # @wornpage/button
 
+> Part of **[Wornpage Components](https://github.com/wornpage/wornpage#component-library)**.
+> [Browse the catalog](https://wornpage.pages.dev) · [Setup guide](https://github.com/wornpage/wornpage/blob/main/docs/getting-started.md) · [Wornpage overview](https://github.com/wornpage/wornpage)
+
 Svelte 5 button primitives: text and link buttons plus accessible icon-only actions.
 
 <!-- wornpage-delivery:v2 browser-bundle -->
